@@ -1,0 +1,13 @@
+# move to git repo root
+function cdg() {
+  cd $(git rev-parse --show-toplevel)
+}
+
+function chlog() {
+  git add CHANGELOG.md && git commit -m 'Updated the changelog.'
+}
+
+function gpsup() {
+    BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    git push --set-upstream origin $BRANCH
+}

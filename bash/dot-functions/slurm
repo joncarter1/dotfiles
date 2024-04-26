@@ -1,0 +1,10 @@
+# Useful functions for slurm.
+
+# Get the stdout/stderr from job ID, regardless of log directory.
+function scat() {
+    cat $(scontrol show job $1 | grep StdOut | cut -d= -f2)
+}
+
+function serr() {
+    cat $(scontrol show job $1 | grep StdErr | cut -d= -f2)
+}

@@ -1,0 +1,8 @@
+# Get size of a Docker image.
+function imsize() {
+  if [[ -z $1 ]]; then
+    echo "No image provided."
+  else
+    docker inspect -f "{{ .Size }}" $1 | numfmt --to=si
+  fi
+}

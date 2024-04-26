@@ -1,0 +1,37 @@
+[ -n "$PS1" ] && source ~/.bash_profile;
+
+# Add .local/bin dir
+export PATH="${HOME}/.local/bin:$PATH"
+
+# Activate fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# Activate zoxide
+[ -f ~/.local/bin/zoxide ] && eval "$(zoxide init bash)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "${HOME}/google-cloud-sdk/path.bash.inc" ]; then . "${HOME}/google-cloud-sdk/path.bash.inc"; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "${HOME}/google-cloud-sdk/completion.bash.inc" ]; then . "${HOME}/google-cloud-sdk/completion.bash.inc"; fi
+
+# >>> conda initialize >>>
+function setup_conda() {
+    __conda_setup="$(conda 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "${HOME}/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "${HOME}/miniconda3/etc/profile.d/conda.sh"
+        fi
+    fi
+    unset __conda_setup
+}
+# Only set-up Conda if env var is set (allows host-specific set-up).
+[ ! -z "${INITIALISE_CONDA}" ] && setup_conda
+# <<< conda initialize <<<
+
+# Keybindings
+if [[ "$TERM" =~ screen ]] || [[ "$TERM" =~ tmux ]]; then
+  bind '"\e[1;5C":forward-word'  # Ctrl+Right
+  bind '"\e[1;5D":backward-word' # Ctrl+Left
+fi

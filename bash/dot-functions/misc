@@ -1,0 +1,35 @@
+# Determine size of a file or total size of a directory
+function fs() {
+	if du -b /dev/null > /dev/null 2>&1; then
+		local arg=-sbh;
+	else
+		local arg=-sh;
+	fi
+	if [[ -n "$@" ]]; then
+		du $arg -- "$@";
+	else
+		du $arg .[^.]* ./*;
+	fi;
+}
+
+# Find a free port within an optional range.
+function free_port {
+  local start_port=${1:-10000}
+  local end_port=${2:-30000}
+  local port_attempts=0
+  local max_attempts=100
+
+  while ((port_attempts < max_attempts)); do
+    # Generate a random port within the range
+    local port=$(shuf -i ${start_port}-${end_port} -n 1)
+    nc -z localhost "$port" &> /dev/null # Exits with code 0 if not free
+    if [ $? -ne 0 ]; then
+      echo "$port"
+      return
+    fi
+    ((port_attempts++))
+  done
+
+  echo "Could not find a free port within the range after $max_attempts attempts." >&2
+  return 1
+}
