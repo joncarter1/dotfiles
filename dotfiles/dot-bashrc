@@ -26,8 +26,8 @@ function setup_conda() {
     fi
     unset __conda_setup
 }
-# Only set-up Conda if env var is set (allows host-specific set-up).
-[ ! -z "${INITIALISE_CONDA}" ] && setup_conda
+# Set-up Conda unless instructed otherwise. (host-specific)
+[ -z "${SKIP_CONDA_INIT}" ] && setup_conda
 # <<< conda initialize <<<
 
 # Keybindings
