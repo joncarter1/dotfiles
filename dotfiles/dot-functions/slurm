@@ -2,9 +2,15 @@
 
 # Get the stdout/stderr from job ID, regardless of log directory.
 function scat() {
-    cat $(scontrol show job $1 | grep StdOut | cut -d= -f2)
+    JOB_ID="$1"
+    shift
+    SLURM_ARGS="$@" # Pass any others to slurm
+    cat $(scontrol show job ${SLURM_ARGS} $JOB_ID | grep StdOut | cut -d= -f2)
 }
 
 function serr() {
-    cat $(scontrol show job $1 | grep StdErr | cut -d= -f2)
+    JOB_ID="$1"
+    shift
+    SLURM_ARGS="$@" # Pass any others to slurm
+    cat $(scontrol show job ${SLURM_ARGS} $JOB_ID | grep StdErr | cut -d= -f2)
 }
