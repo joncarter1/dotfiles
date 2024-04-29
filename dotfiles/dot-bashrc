@@ -29,9 +29,3 @@ function setup_conda() {
 # Set-up Conda unless instructed otherwise. (host-specific)
 [ -z "${SKIP_CONDA_INIT}" ] && setup_conda
 # <<< conda initialize <<<
-
-# Keybindings
-if [[ "$TERM" =~ screen ]] || [[ "$TERM" =~ tmux ]]; then
-  bind '"\e[1;5C":forward-word'  # Ctrl+Right
-  bind '"\e[1;5D":backward-word' # Ctrl+Left
-fi
