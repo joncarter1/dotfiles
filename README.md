@@ -2,8 +2,13 @@
 
 My personal dotfiles and useful bash scripts.
 
-## Structure
-TODO
+## Contents
+```
+└───scripts
+│   └───install # Common installs e.g. miniconda, fzf, zoxide
+│   └───slurm   # Slurm utilities e.g. setting up VSCode on a compute node.
+└───dotfiles    # Dotfiles: .bashrc, .tmux.conf, .aliases etc.
+```
 
 ## Installation
 I use [GNU Stow](https://www.gnu.org/software/stow/) to manage the installation of my dotfiles. 
@@ -18,9 +23,12 @@ Stow is available from the package manager on modern Linux distros and via homeb
 
 
 ### Steps:
-1. Run `make all`. This will back-up existing dotfiles under `~/.dotfile_backups` and replace them with symlinked versions from this repository.
+1. `make all`. Backs up existing dotfiles under `~/.dotfile_backups` and replaces them with symlinked versions from this repository.
 
-Running `make test` will print out the file operations that will be performed as a check.
+Running `make test` prints out the file operations that will be performed as a check.
+
+n.b. I would not recommend naively installing these dotfiles unless you fully understand what they do.</br>
+Instead, I'd recommend using them (and the examples listed below) to gradually build up your own personal set.
 
 ## Credits
 My dotfiles are heavily inspired by:
