@@ -8,6 +8,12 @@ alias .....="cd ../../../.."
 
 alias vi="vim"
 alias g="git"
+
+# UV
+alias uvr="uv run"
+alias uvs="uv sync" 
+alias uva="uv add"
+alias uvd="uv remove"
 # Python
 alias py="python"
 # Conda
@@ -28,6 +34,7 @@ alias gst="git status"
 alias gcm="git commit --signoff --message"
 alias gcsm="git commit --signoff --gpg-sign --message"
 alias gc="git clone --recursive"
+
 # Shortcuts
 alias dl="cd ~/Downloads"
 
