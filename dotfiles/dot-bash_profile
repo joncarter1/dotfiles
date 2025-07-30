@@ -1,6 +1,10 @@
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH";
 
+# Add .local/bin dir
+export PATH="${HOME}/.local/bin:$PATH"
+
+
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
@@ -25,6 +29,20 @@ if [ -d "$HOME/.exports" ]; then
 fi
 unset file;
 
+# Set-up Brew
+[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Activate fzf
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# Activate zoxide
+[ -f ~/.local/bin/zoxide ] && eval "$(zoxide init bash)"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f "${HOME}/google-cloud-sdk/path.bash.inc" ]; then . "${HOME}/google-cloud-sdk/path.bash.inc"; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f "${HOME}/google-cloud-sdk/completion.bash.inc" ]; then . "${HOME}/google-cloud-sdk/completion.bash.inc"; fi
+
 # When the shell exits, append to the history file instead of overwriting it
 shopt -s histappend  # In Ubuntu this is already set by default
 HISTCONTROL=ignoredups:erasedups # Ubuntu default is ignoreboth
@@ -43,8 +61,6 @@ for option in autocd globstar; do
 	shopt -s "$option" 2> /dev/null;
 done;
 
-# Set-up Brew
-[ -f /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 # Add tab completion for many Bash commands
 if which brew &> /dev/null && [ -r "$(brew --prefix)/etc/profile.d/bash_completion.sh" ]; then
 	# Ensure existing Homebrew v1 completions continue to work
@@ -60,3 +76,19 @@ fi;
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
 [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
+
+# >>> conda initialize >>>
+function setup_conda() {
+    __conda_setup="$(conda 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "${HOME}/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "${HOME}/miniconda3/etc/profile.d/conda.sh"
+        fi
+    fi
+    unset __conda_setup
+}
+# Set-up Conda unless instructed otherwise. (host-specific)
+[ -z "${SKIP_CONDA_INIT}" ] && setup_conda
+# <<< conda initialize <<<
