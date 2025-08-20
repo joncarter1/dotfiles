@@ -1,6 +1,5 @@
 # Don;t souce in non-interactive contexts.
 case $- in *i*) ;; *) return ;; esac
-
 # Load the shell dotfiles, and then some:
 export PATH="$HOME/bin:$PATH";
 export PATH="${HOME}/.local/bin:$PATH"
