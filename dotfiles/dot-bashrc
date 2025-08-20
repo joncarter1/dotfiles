@@ -1,7 +1,62 @@
-[ -n "$PS1" ] && source ~/.bash_profile;
-
-# Add .local/bin dir
+# Don;t souce in non-interactive contexts.
+case $- in *i*) ;; *) return ;; esac
+echo 'running bashrc'
+# Load the shell dotfiles, and then some:
+export PATH="$HOME/bin:$PATH";
 export PATH="${HOME}/.local/bin:$PATH"
+export PATH="${HOME}/.pixi/bin:$PATH"
+# * ~/.extra used for settings outside of version control.
+for file in ~/.{extra}; do
+	[ -r "$file" ] && [ -f "$file" ] && source "$file";
+done;
+
+# Additionally, source all files in the ~/.exports directory
+if [ -d "$HOME/.exports" ]; then
+        for file in "$HOME"/.exports/*; do
+            if [[ ! $file == *.md ]]; then
+                [ -r "$file" ] && [ -f "$file" ] && source "$file";
+            fi
+        done;
+fi
+unset file;
+
+# When the shell exits, append to the history file instead of overwriting it
+shopt -s histappend  # In Ubuntu this is already set by default
+HISTCONTROL=ignoredups:erasedups # Ubuntu default is ignoreboth
+# After each command, append to the history file and reread it
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+
+# Case-insensitive globbing (used in pathname expansion)
+shopt -s nocaseglob;
+# Autocorrect typos in path names when using `cd`
+shopt -s cdspell;
+
+# Enable some Bash 4 features when possible:
+# * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
+# * Recursive globbing, e.g. `echo **/*.txt`
+for option in autocd globstar; do
+	shopt -s "$option" 2> /dev/null;
+done;
+
+# Enable tab completion for `g` by marking it as an alias for `git`
+if type _git &> /dev/null; then
+	complete -o default -o nospace -F _git g;
+fi;
+
+# Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
+[ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2- | tr ' ' '\n')" scp sftp ssh;
+
+for file in ~/.{bash_prompt,aliases}; do
+	[ -r "$file" ] && [ -f "$file" ] && source "$file";
+done;
+# Source all files in the ~/.functions directory
+if [ -d "$HOME/.functions" ]; then
+        for file in "$HOME"/.functions/*; do
+            if [[ ! $file == *.md ]]; then
+                [ -r "$file" ] && [ -f "$file" ] && source "$file";
+            fi
+        done;
+fi
 
 # Activate fzf
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
