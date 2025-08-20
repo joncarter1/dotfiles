@@ -1,0 +1,4 @@
+mouse-hide-while-typing = true
+term = xterm-256color
+keybind = unconsumed:ctrl+g=reload_config
+font-size = 15
