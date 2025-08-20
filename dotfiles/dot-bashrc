@@ -5,10 +5,7 @@ export PATH="$HOME/bin:$PATH";
 export PATH="${HOME}/.local/bin:$PATH"
 export PATH="${HOME}/.pixi/bin:$PATH"
 # * ~/.extra used for settings outside of version control.
-for file in ~/.{extra}; do
-	[ -r "$file" ] && [ -f "$file" ] && source "$file";
-done;
-
+[ -f ~/.extra ] && source ~/.extra
 # Additionally, source all files in the ~/.exports directory
 if [ -d "$HOME/.exports" ]; then
         for file in "$HOME"/.exports/*; do
