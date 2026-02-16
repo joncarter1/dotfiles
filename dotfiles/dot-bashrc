@@ -83,3 +83,5 @@ function setup_conda() {
 # Set-up Conda unless instructed otherwise. (host-specific)
 [ -z "${SKIP_CONDA_INIT}" ] && setup_conda
 # <<< conda initialize <<<
+# brr shell completion
+command -v brr &> /dev/null && eval "$(brr completion bash)"

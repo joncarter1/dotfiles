@@ -2,3 +2,11 @@ mouse-hide-while-typing = true
 term = xterm-256color
 keybind = unconsumed:ctrl+g=reload_config
 font-size = 15
+
+# Create new split to the right (for Neovim)
+keybind = cmd+d=new_split:right
+
+# Create new split below (for your shell)
+keybind = cmd+shift+t=new_split:down
+
+keybind = shift+enter=text:\x1b\r
