@@ -11,3 +11,6 @@ fi;
 
 # Source the bashrc file
 [ -r "$HOME/.bashrc" ] && . "$HOME/.bashrc"
+
+# The next line updates PATH for Nebius CLI.
+if [ -f "$HOME/.nebius/path.bash.inc" ]; then source "$HOME/.nebius/path.bash.inc"; fi

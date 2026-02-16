@@ -169,3 +169,5 @@
 [init]
 
 	defaultBranch = main
+[user]
+	name = Jonathan Carter

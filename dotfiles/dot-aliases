@@ -7,6 +7,7 @@ alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
 alias vi="vim"
+alias gconf="vim ~/.config/ghostty/config"
 alias g="git"
 
 # UV
