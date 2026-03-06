@@ -7,6 +7,12 @@ font-size = 15
 keybind = cmd+d=new_split:right
 
 # Create new split below (for your shell)
-keybind = cmd+shift+t=new_split:down
+keybind = cmd+shift+d=new_split:down
+
+# Zoom focused split
+keybind = cmd+shift+f=toggle_split_zoom
+
+# Equalise splits
+keybind = cmd+shift+e=equalize_splits
 
 keybind = shift+enter=text:\x1b\r
