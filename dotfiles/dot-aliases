@@ -15,6 +15,9 @@ alias uvr="uv run"
 alias uvs="uv sync" 
 alias uva="uv add"
 alias uvd="uv remove"
+# Ray
+alias rj="uv run ray job"
+alias rs="uv run ray status"
 # Python
 alias py="python"
 # Conda

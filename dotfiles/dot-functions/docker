@@ -3,6 +3,12 @@ function imsize() {
   if [[ -z $1 ]]; then
     echo "No image provided."
   else
-    docker inspect -f "{{ .Size }}" $1 | numfmt --to=si
+    docker inspect -f "{{ .Size }}" $1 | awk '{
+      s = $1;
+      if (s >= 1073741824) printf "%.1fG\n", s/1073741824;
+      else if (s >= 1048576) printf "%.1fM\n", s/1048576;
+      else if (s >= 1024) printf "%.1fK\n", s/1024;
+      else printf "%dB\n", s;
+    }'
   fi
 }
